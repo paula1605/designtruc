@@ -31,46 +31,37 @@
     
         <main class="container">
 
-        <div id="form-success" style="display:none; color:green; margin-bottom:1rem;">
-            ✅ Votre message a bien été envoyé !
-        </div>
-        <div id="form-error" style="display:none; color:red; margin-bottom:1rem;">
-            ❌ Une erreur est survenue. Veuillez réessayer.
-        </div>
-
-        <form id="contact-form">
         <div class="box-name-lastname">    
 
             <div class="box-name">
-                <label for="first-name">NAME *</label>
-                <input id="first-name" type="text" name="first_name" required>
+                <label>NAME *</label>
+                <input id="field-firstname" type="text">
             </div>
 
             <div class="box-last-name">
-                <label for="last-name">LAST NAME *</label>
-                <input id="last-name" type="text" name="last_name" required>
+                <label>LAST NAME *</label>
+                <input id="field-lastname" type="text">
             </div>
         </div>
 
         <div class="box-formulaire">
-            <label for="email">E - MAIL *</label>
-            <input id="email" type="email" name="email" required>
+            <label>E - MAIL *</label>
+            <input id="field-email" type="email">
         </div>
 
         <div class="box-formulaire">
-            <label for="subject">SUBJECT *</label>
-            <input id="subject" type="text" name="subject" required>
+            <label>SUBJECT *</label>
+            <input id="field-subject" type="text">
         </div>
 
         <div class="box-formulaire box-message">
-            <label for="message">MESSAGE *</label>
-            <textarea id="message" name="message" required></textarea>
+            <label>MESSAGE *</label>
+            <textarea id="field-message"></textarea>
         </div>
 
         <div class="box-button">
-            <button type="submit" id="submit-btn">SUBMIT</button>
+            <button id="submit-btn" onclick="submitForm()">SUBMIT</button>
         </div>
-        </form>
         </main>
     </section>
 
@@ -108,38 +99,50 @@
     // ⚠️ Remplacez YOUR_FORM_ID par votre vrai ID Formspree
     const FORMSPREE_URL = "https://formspree.io/f/xkoeqzek";
 
-    document.getElementById('contact-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-
+    async function submitForm() {
         const btn = document.getElementById('submit-btn');
-        const successMsg = document.getElementById('form-success');
-        const errorMsg = document.getElementById('form-error');
+
+        const firstname = document.getElementById('field-firstname').value.trim();
+        const lastname  = document.getElementById('field-lastname').value.trim();
+        const email     = document.getElementById('field-email').value.trim();
+        const subject   = document.getElementById('field-subject').value.trim();
+        const message   = document.getElementById('field-message').value.trim();
+
+        if (!firstname || !lastname || !email || !subject || !message) {
+            alert('Veuillez remplir tous les champs.');
+            return;
+        }
 
         btn.textContent = 'SENDING...';
         btn.disabled = true;
-        successMsg.style.display = 'none';
-        errorMsg.style.display = 'none';
 
         try {
             const response = await fetch(FORMSPREE_URL, {
                 method: 'POST',
-                body: new FormData(this),
-                headers: { 'Accept': 'application/json' }
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ firstname, lastname, email, subject, message })
             });
 
             if (response.ok) {
-                successMsg.style.display = 'block';
-                this.reset();
+                alert('✅ Votre message a bien été envoyé !');
+                document.getElementById('field-firstname').value = '';
+                document.getElementById('field-lastname').value  = '';
+                document.getElementById('field-email').value     = '';
+                document.getElementById('field-subject').value   = '';
+                document.getElementById('field-message').value   = '';
             } else {
-                errorMsg.style.display = 'block';
+                alert('❌ Une erreur est survenue. Veuillez réessayer.');
             }
         } catch (err) {
-            errorMsg.style.display = 'block';
+            alert('❌ Une erreur est survenue. Veuillez réessayer.');
         }
 
         btn.textContent = 'SUBMIT';
         btn.disabled = false;
-    });
+    }
 </script>
 
 <script type="text/babel">
