@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact</title>
     <link rel="stylesheet" href="./css/style.css">
+    <style>
+        #form-feedback {
+            display: none;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+        #form-feedback.success { color: #4caf50; }
+        #form-feedback.error   { color: #e53935; }
+    </style>
 </head>
 <body>
     
@@ -30,6 +40,8 @@
         </div>
     
         <main class="container">
+
+        <div id="form-feedback"></div>
 
         <div class="box-name-lastname">    
 
@@ -60,7 +72,7 @@
         </div>
 
         <div class="box-button">
-            <button id="submit-btn" onclick="submitForm()">SUBMIT</button>
+            <button id="submit-btn">SEND</button>
         </div>
         </main>
     </section>
@@ -83,88 +95,96 @@
            <h5>Web design by Paula DUARTE <br> Web developer Sylvain FAURÉ</h5>
        </div>
            
-           
-           
        <div class="footer-right">
            <h5>© 2023 ALL RIGHTS RESERVED</h5>
        </div>
    </section>
 
+    <!-- Formspree -->
+    <script>
+        var FORMSPREE_URL = "https://formspree.io/f/xkoeqzek";
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var btn = document.getElementById('submit-btn');
+            var feedback = document.getElementById('form-feedback');
+
+            function showFeedback(type, msg) {
+                feedback.className = type;
+                feedback.textContent = msg;
+                feedback.style.display = 'block';
+            }
+
+            btn.addEventListener('click', async function () {
+                var firstname = document.getElementById('field-firstname').value.trim();
+                var lastname  = document.getElementById('field-lastname').value.trim();
+                var email     = document.getElementById('field-email').value.trim();
+                var subject   = document.getElementById('field-subject').value.trim();
+                var message   = document.getElementById('field-message').value.trim();
+
+                feedback.style.display = 'none';
+
+                if (!firstname || !lastname || !email || !subject || !message) {
+                    showFeedback('error', '⚠ Veuillez remplir tous les champs.');
+                    return;
+                }
+
+                btn.textContent = 'SENDING...';
+                btn.disabled = true;
+
+                try {
+                    var response = await fetch(FORMSPREE_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ firstname: firstname, lastname: lastname, email: email, subject: subject, message: message })
+                    });
+
+                    if (response.ok) {
+                        showFeedback('success', '✓ Votre message a bien été envoyé !');
+                        document.getElementById('field-firstname').value = '';
+                        document.getElementById('field-lastname').value  = '';
+                        document.getElementById('field-email').value     = '';
+                        document.getElementById('field-subject').value   = '';
+                        document.getElementById('field-message').value   = '';
+                    } else {
+                        showFeedback('error', '✕ Une erreur est survenue. Veuillez réessayer.');
+                    }
+                } catch (err) {
+                    showFeedback('error', '✕ Impossible d\'envoyer. Vérifiez votre connexion.');
+                }
+
+                btn.textContent = 'SEND';
+                btn.disabled = false;
+            });
+        });
+    </script>
+
+    <!-- Menu navigation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const showDialog = () => {
+            document.getElementById('dialog').classList.add('show');
+            const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
+            const body = document.body;
+            body.style.height = '100vh';
+            body.style.overflowY = 'hidden';
+        };
+        const closeDialog = () => {
+            const body = document.body;
+            const scrollY = body.style.top;
+            body.style.position = '';
+            body.style.top = '';
+            body.style.height = '';
+            body.style.overflowY = '';
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            document.getElementById('dialog').classList.remove('show');
+        };
+        window.addEventListener('scroll', () => {
+            document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+        });
+    </script>
 
 </body>
-
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-<script>
-    // ⚠️ Remplacez YOUR_FORM_ID par votre vrai ID Formspree
-    const FORMSPREE_URL = "https://formspree.io/f/xkoeqzek";
-
-    async function submitForm() {
-        const btn = document.getElementById('submit-btn');
-
-        const firstname = document.getElementById('field-firstname').value.trim();
-        const lastname  = document.getElementById('field-lastname').value.trim();
-        const email     = document.getElementById('field-email').value.trim();
-        const subject   = document.getElementById('field-subject').value.trim();
-        const message   = document.getElementById('field-message').value.trim();
-
-        if (!firstname || !lastname || !email || !subject || !message) {
-            alert('Veuillez remplir tous les champs.');
-            return;
-        }
-
-        btn.textContent = 'SENDING...';
-        btn.disabled = true;
-
-        try {
-            const response = await fetch(FORMSPREE_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ firstname, lastname, email, subject, message })
-            });
-
-            if (response.ok) {
-                alert('✅ Votre message a bien été envoyé !');
-                document.getElementById('field-firstname').value = '';
-                document.getElementById('field-lastname').value  = '';
-                document.getElementById('field-email').value     = '';
-                document.getElementById('field-subject').value   = '';
-                document.getElementById('field-message').value   = '';
-            } else {
-                alert('❌ Une erreur est survenue. Veuillez réessayer.');
-            }
-        } catch (err) {
-            alert('❌ Une erreur est survenue. Veuillez réessayer.');
-        }
-
-        btn.textContent = 'SUBMIT';
-        btn.disabled = false;
-    }
-</script>
-
-<script type="text/babel">
-    const showDialog = () => {
-document.getElementById('dialog').classList.add('show')
-const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
-const body = document.body;
-body.style.height = '100vh';
-body.style.overflowY = 'hidden';
-};
-const closeDialog = () => {
-const body = document.body;
-const scrollY = body.style.top;
-body.style.position = '';
-body.style.top = '';
-body.style.height = '';
-body.style.overflowY = '';
-window.scrollTo(0, parseInt(scrollY || '0') * -1);
-document.getElementById('dialog').classList.remove('show');
-}
-window.addEventListener('scroll', () => {
-document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
-});
-</script>
 </html>
