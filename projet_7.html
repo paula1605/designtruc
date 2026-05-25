@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet The populist</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="yellow">
+
+    <div id='dialog'>
+        <div id='close' onClick='closeDialog()'></div>        
+            <ul>
+                <li><a href="./index.html">HOME</a></li>
+                <li><a href="./portfolio.html">WORKS</a></li>
+                <li><a href="./about.html">ABOUT</a></li>
+                <li><a href="./contact.html">CONTACT</a></li>
+            </ul>
+    </div>  
+           
+     
+<section class="section-projet">
+
+    <div id='show'  onClick='showDialog()' style="right: auto; margin-top: 49px;">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <div class="espace-projet esp-projet ">
+        <img src="./img/img-pages-projets/projet_7/projet_7_1.jpg">
+        <video src="./img/img-pages-projets/projet_7/the populist.mp4" autoplay loop></video>
+        <img class="imgprojet-bas7" src="./img/img-pages-projets/projet_7/projet_7_2.jpg">
+    </div>
+
+    <div class="texte-projet">
+        <h3>The populist<br>
+            Galataport - Istanbul
+            <br><br> Professional project 
+            <br><br> Lagranja design - Barcelona
+            <br><br>Inspired by the American Prohibition period of the 1920s, the creative concept is displayed on walls, 
+                    menus and napkins as powerful slogans, whether painted, pasted or made in neon.
+            <br><br> Creation of graphic concepts, posters and mock-ups. </h3>
+
+        <div class="trait"></div>
+        <h4>The populist
+            <br>Galataport - Istanbul
+            <br><br>Projet professionnel
+            <br><br>Lagranja design - Barcelone
+            <br><br>Inspiré de la prohibition américaine des années 1920, le concept créatif s’affiche sur les murs, 
+                    les menus et les serviettes sous forme de slogans percutants, qu’ils soient peints, 
+                    collés ou réalisés en néon.
+            <br><br>Création de concepts graphiques, d’affiches et de maquettes.</h4>
+    </div>
+</section>        
+    
+
+<section class="sec-fleche-retour">
+    <a href="./projet_8.html"><div class="fleche-retour"></div></a>
+</section>
+
+
+
+<section class="section footer">
+     <div class="footer-left">
+        <h5>CONTACT</h5>
+            <h6>designtruc@gmail.com <br> +33 06.13.51.82.93</h6>
+        
+        <br><br>
+        <h5>FOLLOW US</h5>
+        <h6>Behence - Instagram</h6>
+        <br><br>
+        
+        <h5>ADRESSE</h5>
+        <h6>We are in Lyon in coworking or in our home offices.</h6>
+        <br><br>
+        
+        <h5>Web design by Paula DUARTE <br> Web developer Sylvain FAURÉ</h5>
+    </div>
+        
+        
+        
+    <div class="footer-right">
+        <h5>© 2023 ALL RIGHTS RESERVED</h5>
+    </div>
+</section>  
+
+
+    
+</body>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+    const showDialog = () => {
+document.getElementById('dialog').classList.add('show')
+const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
+const body = document.body;
+body.style.height = '100vh';
+body.style.overflowY = 'hidden';
+};
+const closeDialog = () => {
+const body = document.body;
+const scrollY = body.style.top;
+body.style.position = '';
+body.style.top = '';
+body.style.height = '';
+body.style.overflowY = '';
+window.scrollTo(0, parseInt(scrollY || '0') * -1);
+document.getElementById('dialog').classList.remove('show');
+}
+window.addEventListener('scroll', () => {
+document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+});
+</script>
+</html>

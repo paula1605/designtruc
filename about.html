@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    
+    <div id='dialog'>
+        <div id='close' onClick='closeDialog()'></div>        
+            <ul>
+                <li><a href="./index.html">HOME</a></li>
+                <li><a href="./portfolio.html">WORKS</a></li>
+                <li><a href="./about.html">ABOUT</a></li>
+                <li><a href="./contact.html">CONTACT</a></li>
+            </ul>
+    </div>
+
+
+    <section class="home-page-portfolio page-contact page-about">
+        
+        <div id='show'  onClick='showDialog()' style="right: auto; margin-top: 49px;">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    
+        <main class="box-about">
+            <div class="img-about"></div>
+            <h4 class="text-about">Paula Duarte. Art Director and web designer. Creator of DESIGNTRUC. 
+                Colombian nationality and based in France, Lyon, 
+                she has decided to propose a multidisciplinary graphic design 
+                and communication agency. Creator of brand concept, illustration, 
+                motion & web designer, I have been able to work for different 
+                brands and national and international companies. 
+                <br><br>
+                <span>I like to learn, I like to listen, I like to create.</span></h4>
+        
+        </main>
+    </section>
+
+
+    <section class="section footer">
+        <div class="footer-left">
+           <h5>CONTACT</h5>
+               <h6>designtruc@gmail.com <br> +33 06.13.51.82.93</h6>
+           
+           <br><br>
+           <h5>FOLLOW US</h5>
+           <h6>Behence - Instagram</h6>
+           <br><br>
+           
+           <h5>ADRESSE</h5>
+           <h6>We are in Lyon in coworking or in our home offices.</h6>
+           <br><br>
+           
+           <h5>Web design by Paula DUARTE <br> Web developer Sylvain FAURÉ</h5>
+       </div>
+           
+           
+           
+       <div class="footer-right">
+           <h5>© 2023 ALL RIGHTS RESERVED</h5>
+       </div>
+   </section>
+
+   
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+    const showDialog = () => {
+document.getElementById('dialog').classList.add('show')
+const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
+const body = document.body;
+body.style.height = '100vh';
+body.style.overflowY = 'hidden';
+};
+const closeDialog = () => {
+const body = document.body;
+const scrollY = body.style.top;
+body.style.position = '';
+body.style.top = '';
+body.style.height = '';
+body.style.overflowY = '';
+window.scrollTo(0, parseInt(scrollY || '0') * -1);
+document.getElementById('dialog').classList.remove('show');
+}
+window.addEventListener('scroll', () => {
+document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+});
+</script>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    
+    <div id='dialog'>
+        <div id='close' onClick='closeDialog()'></div>        
+            <ul>
+                <li><a href="./index.html">HOME</a></li>
+                <li><a href="./portfolio.html">WORKS</a></li>
+                <li><a href="./about.html">ABOUT</a></li>
+                <li><a href="./contact.html">CONTACT</a></li>
+            </ul>
+    </div>
+
+
+    <section class="home-page-portfolio page-contact">
+
+
+        <div id='show'  onClick='showDialog()' style="right: auto; margin-top: 49px;">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    
+        <main class="container">
+
+        <div class="box-name-lastname">    
+
+            <div class="box-name">
+                <label>NAME *</label>
+                <input type="text">
+            </div>
+
+            <div class="box-last-name">
+                <label>LAST NAME *</label>
+                <input type="text">
+            </div>
+        </div>
+
+        <div class="box-formulaire">
+            <label>E - MAIL *</label>
+            <input type="email">
+        </div>
+
+        <div class="box-formulaire">
+            <label>SUBJECT *</label>
+            <input type="text">
+        </div>
+
+        <div class="box-formulaire box-message">
+            <label>MESSAGE *</label>
+            <textarea></textarea>
+        </div>
+
+        <div class="box-button">
+            <button>SUBMIT</button>
+        </div>
+        </main>
+    </section>
+
+
+    <section class="section footer">
+        <div class="footer-left">
+           <h5>CONTACT</h5>
+               <h6>designtruc@gmail.com <br> +33 06.13.51.82.93</h6>
+           
+           <br><br>
+           <h5>FOLLOW US</h5>
+           <h6>Behence - Instagram</h6>
+           <br><br>
+           
+           <h5>ADRESSE</h5>
+           <h6>We are in Lyon in coworking or in our home offices.</h6>
+           <br><br>
+           
+           <h5>Web design by Paula DUARTE <br> Web developer Sylvain FAURÉ</h5>
+       </div>
+           
+           
+           
+       <div class="footer-right">
+           <h5>© 2023 ALL RIGHTS RESERVED</h5>
+       </div>
+   </section>
+
+
+</body>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+    const showDialog = () => {
+document.getElementById('dialog').classList.add('show')
+const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
+const body = document.body;
+body.style.height = '100vh';
+body.style.overflowY = 'hidden';
+};
+const closeDialog = () => {
+const body = document.body;
+const scrollY = body.style.top;
+body.style.position = '';
+body.style.top = '';
+body.style.height = '';
+body.style.overflowY = '';
+window.scrollTo(0, parseInt(scrollY || '0') * -1);
+document.getElementById('dialog').classList.remove('show');
+}
+window.addEventListener('scroll', () => {
+document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+});
+</script>
+</html>
